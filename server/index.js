@@ -133,59 +133,34 @@ io.on('connection', socket => {
             match.players[socket.id].connected = true;
             socket.ingame = match.code;
             socket.join(match.code);
-            let players = match.playerInfo(p => ({
-                dead: p.dead,
-                num: p.num,
-            }));
-            socket.emit('matchStart', {
-                ...JSON.parse(player.startInfo),
-                me: players.find(p => p.num == player.num),
-                players,
-                ship: match.ship,
-                dir: match.dir,
-                board: match.board.map((row, y) => row.map((tile, x) => match.revealed[y][x] ? tile : 'unknown')),
-            });
-            setTimeout(() => {
-                match.sendLog(`${player.name} rejoined the game.`);
 
-                socket.emit('turnNum', match.turnNum);
-                for (let i = 0; i < match.treasuresFound; i++)
-                    socket.emit('treasure');
-                socket.emit('damage', match.startHP - match.HP);
-    
-                switch (match.phase) {
-                    case 'choose':
-                        if (player.waitStatus == 0)
-                            socket.emit('cards', player.hand);
-                        else
-                            socket.emit('wait', Object.values(match.players).map(p => ({n: p.num, s: p.waitStatus})));
-                        break;
-                    
-                    case 'play':
-                        io.to(this.code).emit('play', 'back', match.playPile.length);
-                        break;
-                    
-                    case 'choosePlayer':
-                        if (match.chooseOccasion == 'alliedTraitor') {
-                            if (player.role == 'seamaster') {
-                                socket.emit('choosePlayer', 'Who do you think is the biologist?');
-                                break;
-                            }
-                        } else if (match.chooseOccasion == 'investigate') {
-                            if (player.num == match.investigator) {
-                                socket.emit('choosePlayer', 'Who would you like to learn the role of?');
-                                break;
-                            }
-                        }
-                        
-                    case 'discuss':
-                        socket.emit('discuss', match.currentVote);
-                        socket.emit('mute', match.mute > 0);
-                        Object.values(match.players).forEach(p => socket.emit('vote', p.num, match.votingAnonymity == 0 ? p.vote : true));
-                        socket.emit('vote', player.num, player.vote);
-                        break;
-                }
-            }, 1000);
+            let matchInfo = {
+                players: match.playerInfo(),
+                options: match.matchInfo().options,
+                code: match.code,
+                drawingNum: match.drawingNum,
+                finished: match.finished,
+            };
+
+            if (match.presentPhase) {
+                socket.emit('present', {
+                    ...matchInfo,
+                    num: num,
+                    amHost: socket.id == match.host,
+                    plots: match.plots,
+                    presenting: match.presenting,
+                    presentingImage: match.presentingImage,
+                    host: match.players[match.host].num,
+                }, match.rjCode);
+            } else {
+                let plot = match.plots.find(p => p.playerOrder[match.drawingNum] == num);
+
+                socket.emit('matchStart', {
+                    ...matchInfo,
+                    theme: [0, 1].includes(match.drawingNum) ? plot.theme : plot.drawings.slice(plot.pos-1, plot.pos+1),
+                    num: player.num,
+                });
+            }
         }
     });
 

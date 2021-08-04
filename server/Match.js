@@ -28,6 +28,7 @@ class Match {
         this.host = null;
         this.drawingNum = 0;
         this.finished = [];
+        this.presentPhase = false;
     }
 
     setOptions(options) {
@@ -233,6 +234,7 @@ class Match {
 
     present() {
         shuffleArray(this.plots);
+        this.presentPhase = true;
         this.presenting = 0;
         this.presentingImage = 0;
         let matchInfo = {
@@ -243,14 +245,14 @@ class Match {
             presentingImage: this.presentingImage,
             host: this.players[this.host].num,
         };
-        let rjCode = String(Math.random()).slice(2);
+        this.rjCode = String(Math.random()).slice(2);
         Object.entries(this.players).forEach(player => {
             let presentInfo = {
                 ...matchInfo,
                 num: player[1].num,
                 amHost: player[0] == this.host,
             };
-            player[1].socket.emit('present', presentInfo, rjCode);
+            player[1].socket.emit('present', presentInfo, this.rjCode);
             player[1].presentInfo = JSON.stringify(presentInfo);
         });
         io.to(this.code).emit('wait', this.finished);
@@ -261,12 +263,11 @@ class Match {
         if (this.presentingImage > this.plots[this.presenting].drawings.length) {
             this.presenting++;
             this.presentingImage = 0;
-            if (this.presenting == this.plots.length)
-                this.endMatch();
-            else
-                io.to(this.code).emit('presentNewPlot');
+            io.to(this.code).emit('presentNewPlot');
         } else {
             io.to(this.code).emit('presentNewDrawing');
+            if (this.presenting == this.plots.length-1 && this.presentingImage == this.plots[this.presenting].drawings.length)
+                this.endMatch();
         }
     }
 
