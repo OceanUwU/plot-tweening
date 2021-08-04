@@ -1,0 +1,17 @@
+[{
+    "id": "15p",
+    "name": "default",
+    "options": {
+        "public": false,
+        "players": 15
+    }
+},
+
+{
+    "id": "15p2",
+    "name": "default2",
+    "options": {
+        "public": false,
+        "players": 15
+    }
+}]
