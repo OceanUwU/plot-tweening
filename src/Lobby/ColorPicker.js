@@ -26,7 +26,6 @@ function ColorPicker(props) {
     if (props.matchInfo != null) {
         React.useEffect(() => {
             let showTaken = matchInfo => {
-                console.log(':O');
                 setTaken(matchInfo.players.map(p => p.num));
             };
             socket.on('matchUpdate', showTaken);

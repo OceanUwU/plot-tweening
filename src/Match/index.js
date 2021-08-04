@@ -98,7 +98,6 @@ function getImg(paper) {
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		ctx.fillStyle = document.getElementsByClassName('lc-drawing')[0].style['background-color'];
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		console.log(ctx.fillStyle);
 		let img = new Image();
 		img.onload = () => {
 			ctx.drawImage(img, 0, 0);
@@ -106,7 +105,6 @@ function getImg(paper) {
 		};
 		img.src = paperCanvas.toDataURL();
 		//ctx.putImageData(paperCanvas.getContext('2d').getImageData(0, 0, paperCanvas.width, paperCanvas.height), 0, 0);
-		//console.log(canvas.toDataURL());
 	});
 }
 
@@ -204,7 +202,7 @@ function Match(props) {
                 <div id="drawingArea" className={classes.literallyCanvas} />
                 {Array.isArray(drawInfo) ? <img src={drawInfo[1]} className={classes.image} /> : null}
                 
-                <Button size="large" color="primary" style={{marginTop: 10}} onClick={async () => {socket.emit('submit', await getImg(canvas)); console.log(canvas, 'a');}}>Submit</Button>
+                <Button size="large" color="primary" style={{marginTop: 10}} onClick={async () => socket.emit('submit', await getImg(canvas))}>Submit</Button>
                 
                 <Divider style={{marginTop: 10, marginBottom: 10, width: '100%'}} />
             </div>

@@ -144,7 +144,7 @@ function Presentation(props) {
             <table>
                 <thead>
                     <td><Typography variant="h4">Players</Typography></td>
-                    <td><Typography variant="h4" a={console.log(props.matchInfo)}>{props.matchInfo.players.find(p => p.num == props.matchInfo.plots[presenting].owner).name}'s plot</Typography></td>
+                    <td><Typography variant="h4">{props.matchInfo.players.find(p => p.num == props.matchInfo.plots[presenting].owner).name}'s plot</Typography></td>
                 </thead>
                 <tbody>
                     <tr>

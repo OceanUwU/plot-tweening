@@ -29,7 +29,6 @@ if (localStorage.stpresets && localStorage.stpreset) {
     if (preset)
         optionsToLoad = preset.options;
 }
-console.log(optionsToLoad);
 
 var options = {
     ...defaultMatchOptions,

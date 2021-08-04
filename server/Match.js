@@ -164,7 +164,6 @@ class Match {
     }
 
     start() {
-        console.log(':D')
         this.playersPlaying = Object.keys(this.players).length;
 
         //set up players
@@ -179,9 +178,9 @@ class Match {
         let playerNums = shuffleArray(Object.values(this.players).map(p => p.num));
         let plotPlayers = playerNums.map((e, i) => [...playerNums.slice(i), ...playerNums.slice(0, i)]);
 
-        console.log(playerNums)
         this.plots = [];
-        Object.values(this.players).forEach((player, index) => {
+        playerNums.forEach((num, index) => {
+            let player = Object.values(this.players).find(p => p.num == num);
             let plot = new Plot(player, plotPlayers[index]);
             this.plots.push(plot);
 
@@ -259,9 +258,7 @@ class Match {
 
     presentNext() {
         this.presentingImage++;
-        console.log(this.presentingImage, this.presenting, this.plots[this.presenting].drawings.length)
         if (this.presentingImage > this.plots[this.presenting].drawings.length) {
-            console.log('end of plot!');
             this.presenting++;
             this.presentingImage = 0;
             if (this.presenting == this.plots.length)
