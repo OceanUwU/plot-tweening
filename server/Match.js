@@ -72,7 +72,7 @@ class Match {
 
     join(player) {
         let numsTaken = Object.values(this.players).map(p => p.num);
-        let numsAvailable = [...Array(16).keys()].filter(n => !numsTaken.includes(n));
+        let numsAvailable = [...Array(25).keys()].filter(n => !numsTaken.includes(n));
         let num = numsAvailable[Math.floor(Math.random() * numsAvailable.length)];
         this.players[player] = {
             ...JSON.parse(JSON.stringify(defaultPlayer)),

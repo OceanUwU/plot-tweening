@@ -3,6 +3,7 @@ import GIF from "gif.js";
 const width = 539;
 const height = 369;
 const delay = 2500;
+const logoSize = 75;
 
 function themeFrame(theme) {
     return new Promise(async res => {
@@ -23,7 +24,6 @@ function themeFrame(theme) {
         ctx.fillText(window.location.host, width/2, height/2+50);
         let logo = new Image();
         logo.onload = () => {
-            let logoSize = 75;
             ctx.drawImage(logo, (width/2)-(logoSize/2), (height/2)-(logoSize/2)-75, logoSize, logoSize);
             res(ctx);
         } 

@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const rows = 4;
-const columns = 4;
+const rows = 5;
+const columns = 5;
 
 function ColorPicker(props) {
     const classes = useStyles();

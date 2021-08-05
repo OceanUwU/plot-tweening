@@ -2,7 +2,7 @@ const { SportsCricket } = require('@material-ui/icons');
 const cfg = require('./cfg');
 const maxUsernameLength = 8;
 const allowedUsernameChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ';
-const colorsAllowed = [...Array(16).keys()];
+const colorsAllowed = [...Array(25).keys()];
 const playersAllowed = [3, 15];
 
 const codeChars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
