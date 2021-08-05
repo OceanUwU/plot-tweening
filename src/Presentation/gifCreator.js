@@ -17,7 +17,6 @@ function themeFrame(theme) {
         ctx.fillStyle = 'black';
         ctx.font = '38px Arial';
         ctx.fillText(`Theme: ${theme}`, width/2, height/2);
-        res(ctx);
 
         ctx.textBaseline = 'top';
         ctx.font = '16px Arial';
@@ -26,6 +25,7 @@ function themeFrame(theme) {
         logo.onload = () => {
             let logoSize = 75;
             ctx.drawImage(logo, (width/2)-(logoSize/2), (height/2)-(logoSize/2)-75, logoSize, logoSize);
+            res(ctx);
         } 
         logo.onerror = () => res(ctx);
         logo.src = '/iconSmall.png';
