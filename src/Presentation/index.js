@@ -185,7 +185,8 @@ function Presentation(props) {
                                 <div style={{textAlign: 'center'}}>
                                     <Divider />
                                     <Typography>End of plot</Typography>
-                                    <Button color="secondary" onClick={() => createGif(props.matchInfo.plots[presenting], props.matchInfo.players)}>Download as gif</Button>
+                                    <Button color="secondary" onClick={() => createGif([props.matchInfo.plots[presenting]], props.matchInfo.players)}>Download as gif</Button>
+                                    {presenting == props.matchInfo.plots.length-1 ? [<br />,<Button color="secondary" onClick={() => createGif(props.matchInfo.plots, props.matchInfo.players)}>Download all as one long gif</Button>] : null}
                                 </div>
                             ) : null}
 

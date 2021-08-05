@@ -116,6 +116,7 @@ function Match(props) {
     let [playingStatus, setPlayingStatus] = React.useState(props.matchInfo.finished);
     let [canvas, setCanvas] = React.useState(null);
     let [drawInfo, setDrawInfo] = React.useState(props.matchInfo.theme);
+    let [submittable, setSubmittable] = React.useState(true);
     let resetCanvas = () => setCanvas(LC.init(document.getElementById('drawingArea'), {imageURLPrefix: '/literallycanvas-0.4.13/img', backgroundColor: 'white', tools: [
         LC.tools.Pencil,
         LC.tools.Eraser,
@@ -135,6 +136,8 @@ function Match(props) {
             setDrawingNum(drawingNum+1);
             drawingNum++;
             resetCanvas();
+            setSubmittable(false);
+            setTimeout(() => setSubmittable(true), 7500);
         });
 
         return () => {
@@ -203,7 +206,7 @@ function Match(props) {
                 <div id="drawingArea" className={classes.literallyCanvas} />
                 {Array.isArray(drawInfo) ? <img src={drawInfo[1]} className={classes.image} /> : null}
                 
-                <Button size="large" color="primary" style={{marginTop: 10}} onClick={async () => socket.emit('submit', await getImg(canvas))}>Submit</Button>
+                <Button size="large" color={submittable ? 'primary' : 'default'} disabled={!submittable} style={{marginTop: 10}} onClick={async () => {setSubmittable(false);setTimeout(() => setSubmittable(true), 2500);socket.emit('submit', await getImg(canvas))}}>Submit</Button>
                 
                 <Divider style={{marginTop: 10, marginBottom: 10, width: '100%'}} />
             </div>

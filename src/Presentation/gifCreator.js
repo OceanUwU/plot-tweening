@@ -16,9 +16,19 @@ function themeFrame(theme) {
         ctx.fillRect(0, 0, width, height);
         ctx.fillStyle = 'black';
         ctx.font = '38px Arial';
-        ctx.fillText(`Plot theme: ${theme}`, width/2, height/2);
+        ctx.fillText(`Theme: ${theme}`, width/2, height/2);
         res(ctx);
-        //window.location.host
+
+        ctx.textBaseline = 'top';
+        ctx.font = '16px Arial';
+        ctx.fillText(window.location.host, width/2, height/2+50);
+        let logo = new Image();
+        logo.onload = () => {
+            let logoSize = 75;
+            ctx.drawImage(logo, (width/2)-(logoSize/2), (height/2)-(logoSize/2)-75, logoSize, logoSize);
+        } 
+        logo.onerror = () => res(ctx);
+        logo.src = '/iconSmall.png';
     });
 }
 
@@ -77,11 +87,11 @@ function drawingFrame(drawing, player) {
     });
 }
 
-async function createGif(plot, players) {
-    let frames = await Promise.all([
+async function createGif(plots, players) {
+    let frames = await Promise.all([].concat.apply([], plots.map(plot => [
         themeFrame(plot.theme),
         ...plot.drawings.map((drawing, index) => drawingFrame(drawing, players.find(p => p.num == plot.drawers[index])))
-    ]);
+    ])));
 
     let gif = new GIF({
         width,
