@@ -73,7 +73,7 @@ io.on('connection', socket => {
             } else
                 generateUsername(socket);
             
-            if (socket.ingame && matches[socket.ingame].turnNum == 0) {
+            if (socket.ingame && !matches[socket.ingame].started) {
                 matches[socket.ingame].players[socket.id].name = socket.username;
                 matches[socket.ingame].matchUpdate();
             }

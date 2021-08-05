@@ -9,6 +9,7 @@ import rules from '../Rules';
 import StarsIcon from '@material-ui/icons/Stars';
 import showMatchOptions from '../Home/showMatchOptions';
 import SettingsIcon from '@material-ui/icons/Settings';
+import createGif from './gifCreator.js';
 //import { gameNameChars } from '../Match/gameplay';
 
 const wins = {
@@ -184,7 +185,7 @@ function Presentation(props) {
                                 <div style={{textAlign: 'center'}}>
                                     <Divider />
                                     <Typography>End of plot</Typography>
-                                    <Button color="secondary" onClick={() => showDialog({title: 'laziness', description: 'i havent made this feature yet lol'})}>Download as gif</Button>
+                                    <Button color="secondary" onClick={() => createGif(props.matchInfo.plots[presenting], props.matchInfo.players)}>Download as gif</Button>
                                 </div>
                             ) : null}
 

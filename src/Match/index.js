@@ -133,6 +133,7 @@ function Match(props) {
         socket.on('newDrawing', info => {
             setDrawInfo(info);
             setDrawingNum(drawingNum+1);
+            drawingNum++;
             resetCanvas();
         });
 
