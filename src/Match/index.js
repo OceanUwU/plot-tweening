@@ -120,6 +120,7 @@ function Match(props) {
     let resetCanvas = () => setCanvas(LC.init(document.getElementById('drawingArea'), {imageURLPrefix: '/literallycanvas-0.4.13/img', backgroundColor: 'white', tools: [
         LC.tools.Pencil,
         LC.tools.Eraser,
+        LCFill,
         LC.tools.Line,
         LC.tools.Rectangle,
         LC.tools.Ellipse,
