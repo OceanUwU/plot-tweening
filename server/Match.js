@@ -243,7 +243,7 @@ class Match {
             plots: this.plots,
             presenting: this.presenting,
             presentingImage: this.presentingImage,
-            host: this.players[this.host].num,
+            host: this.players[this.host] ? this.players[this.host].num : null,
         };
         this.rjCode = String(Math.random()).slice(2);
         Object.entries(this.players).forEach(player => {
