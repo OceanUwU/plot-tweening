@@ -147,6 +147,7 @@ class Match {
 
     startStartTimer(player) {
         if (player == this.host && !this.started && Object.keys(this.players).length >= 3) {
+            this.hostNum = this.players[this.host].num;
             this.started = true;
             delete this.rejoinCode;
             this.updateStartTimer();
@@ -240,17 +241,18 @@ class Match {
         let matchInfo = {
             players: this.playerInfo(),
             options: this.matchInfo().options,
+            code: this.code,
             plots: this.plots,
             presenting: this.presenting,
             presentingImage: this.presentingImage,
-            host: this.players[this.host] ? this.players[this.host].num : null,
+            host: this.hostNum,
         };
         this.rjCode = String(Math.random()).slice(2);
         Object.entries(this.players).forEach(player => {
             let presentInfo = {
                 ...matchInfo,
                 num: player[1].num,
-                amHost: player[0] == this.host,
+                amHost: player[1].num == this.hostNum,
             };
             player[1].socket.emit('present', presentInfo, this.rjCode);
             player[1].presentInfo = JSON.stringify(presentInfo);

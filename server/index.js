@@ -134,6 +134,10 @@ io.on('connection', socket => {
             socket.ingame = match.code;
             socket.join(match.code);
 
+            if (num == match.hostNum) {
+                match.host = socket.id;
+            }
+
             let matchInfo = {
                 players: match.playerInfo(),
                 options: match.matchInfo().options,
@@ -146,11 +150,11 @@ io.on('connection', socket => {
                 socket.emit('present', {
                     ...matchInfo,
                     num: num,
-                    amHost: socket.id == match.host,
+                    amHost: num == match.hostNum,
                     plots: match.plots,
                     presenting: match.presenting,
                     presentingImage: match.presentingImage,
-                    host: match.players[match.host].num,
+                    host: match.hostNum,
                 }, match.rjCode);
             } else {
                 let plot = match.plots.find(p => p.playerOrder[match.drawingNum] == num);

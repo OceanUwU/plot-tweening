@@ -9,6 +9,7 @@ import rules from '../Rules';
 import StarsIcon from '@material-ui/icons/Stars';
 import showMatchOptions from '../Home/showMatchOptions';
 import SettingsIcon from '@material-ui/icons/Settings';
+import CodeIcon from '@material-ui/icons/Code';
 import createGif from './gifCreator.js';
 //import { gameNameChars } from '../Match/gameplay';
 
@@ -139,6 +140,10 @@ function Presentation(props) {
                 <IconButton href="/">
                     <HomeIcon />
                 </IconButton>
+                <IconButton onClick={() => showDialog({
+                    title: "Room Code",
+                    description: "Players can use this code to rejoin the match if they get disconnected:",
+                }, <Typography variant="h2">{props.matchInfo.code}</Typography>)}><CodeIcon /></IconButton>
                 <rules.ShowRulesButton />
             </div>
 
