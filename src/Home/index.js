@@ -51,6 +51,12 @@ function Home() {
 
                 <CodeInput />
             </div>
+
+            <div style={{textAlign: 'center', marginTop: 30}}>
+                <a href="https://ocean.lol">
+                    <img width={100} src="https://ocean.lol/media/mark-b.png" />
+                </a>
+            </div>
         </div>
     );
 }
